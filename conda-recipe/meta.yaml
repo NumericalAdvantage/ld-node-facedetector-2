@@ -11,6 +11,10 @@ package:
 source:
   git_url: ../
 
+build:
+  skip: 
+    true # [aarch64]
+
 requirements:
   build:
     - {{ compiler("c") }}
@@ -21,9 +25,19 @@ requirements:
 
   host:
     - link2-cpp
+    - opencv
+    - dlib
+    - ld-interface-i2d
+    - cuda=9.0
+    - cudnn
 
   run:
     - link2
+    - opencv
+    - dlib
+    - ld-interface-i2d
+    - cuda=9.0
+    - cudnn
 
 test:
   commands:
