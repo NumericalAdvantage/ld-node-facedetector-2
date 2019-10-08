@@ -27,7 +27,7 @@ ld-node-facedetector-2 --instance-file instance.json
 ## Specification
 
 This node implements the following RFCs:
-- 026
+- https://draive.com/link_dev/rfc/026/README/index.html
 
 ## Contribution
 
