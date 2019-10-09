@@ -1,7 +1,28 @@
 {
     "file-type" : "link2-node-instance-2",
-    "$id": "l2node:/my-mesh/sample-facedetector-2",
+    "$id": "l2node:/link_dev/ld-node-facedetector-2",
     "specification": "l2spec:/link_dev/ld-node-facedetector-2",
+    "pins" :
+    {
+    	"video_output":
+	{
+	    "offers" :
+	    {
+	        "default" : ["l2offer:/faceRecog_video_output"]
+	    }
+	},
+	"video_input" :
+        {
+            "subscriptions" : [
+            {
+                "l2demand:/img-messages" : {
+                   "#" : "l2offer:/webcam_feed"
+                }
+            }
+            ]
+	}
+        
+    },
     "user-configuration" : {
     }
 }

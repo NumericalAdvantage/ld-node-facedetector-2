@@ -13,6 +13,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(Link2-Cpp REQUIRED)
 find_package(Flatc REQUIRED)
 find_package(ld-cmake-tools REQUIRED)
+find_package(ld-interface-i2d REQUIRED)
+find_package(OpenCV REQUIRED)
+find_package(dlib REQUIRED)
 
 # When adding new data formats, add them to the INPUT_FILES section.
 # If you use libraries that contain Flatbuffer files, uncomment the lines with LD_FLATBUFFER_ variables.
@@ -29,8 +32,8 @@ add_executable(${PROJECT_NAME}
     ${FLATC_GENERATED_SOURCES}
     )
 
-target_include_directories(${PROJECT_NAME} PRIVATE ${FLATC_GENERATED_INCLUDE_DIRS})
-target_link_libraries(${PROJECT_NAME} PUBLIC DRAIVE::Link2-Cpp)
+target_include_directories(${PROJECT_NAME} PRIVATE ${FLATC_GENERATED_INCLUDE_DIRS} ${OpenCV_INCLUDE_DIRS} dlib::dlib)
+target_link_libraries(${PROJECT_NAME} PUBLIC DRAIVE::Link2-Cpp ${CMAKE_THREAD_LIBS_INIT} link_dev::ld-interface-i2d ${OpenCV_LIBS} dlib::dlib)
 
 cmake_make_installation(
         TARGETS ${PROJECT_NAME}

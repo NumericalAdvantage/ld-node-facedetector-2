@@ -1,7 +1,26 @@
 {
     "file-type" : "link2-node-specification-2",
     "$id": "l2spec:/link_dev/ld-node-facedetector-2",
-    "pins" : {
+    "pins" : 
+    {
+        "video_input" : 
+	{
+	    "pin-type" : "input",
+	    "data-type" :
+            {
+                "schema-filename" : "data/Image.bfbs",
+                "table-name" : "link_dev.Image"
+            }
+        },
+	"video_output" :
+	{
+	   "pin-type" : "output",
+           "data-type" :
+           {
+               "schema-filename" : "data/Image.bfbs",
+               "table-name" : "link_dev.Image"
+           }
+	}
     },
     "user-configuration-schema": {
         "$schema": "http://json-schema.org/draft-04/schema#",
