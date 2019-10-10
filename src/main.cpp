@@ -1,37 +1,40 @@
 /*
- * This file is part of project link.developers/ld-node-facedetector-2.
+ * This file is part of project link.developers/ld-node-facedetector.
  * It is copyrighted by the contributors recorded in the version control history of the file,
- * available from its original location https://gitlab.com/link.developers.beta/ld-node-facedetector-2.
+ * available from its original location https://gitlab.com/link.developers.beta/ld-node-facedetector.
  *
  * SPDX-License-Identifier: MPL-2.0
  */
 
-#include <iostream>
-#include <DRAIVE/Link2/NodeDiscovery.hpp>
-#include <DRAIVE/Link2/NodeResources.hpp>
-#include <DRAIVE/Link2/SignalHandler.hpp>
+#include "Facedetector.hpp"
 
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
-    try {
-        // load the node resources for our subscriber
-        DRAIVE::Link2::NodeResources nodeResources { "l2spec:/link_dev/ld-node-facedetector-2", argc, argv };
-        
-        // announce that our node is "online"
+	std::cout << "This service implements link.developers/RFC:026/ld-node-facedetector v1.0.0.\n";
+
+	try 
+	{
+		DRAIVE::Link2::NodeResources nodeResources { "l2spec:/link_dev/ld-node-facedetector-2", argc, argv };
         DRAIVE::Link2::NodeDiscovery nodeDiscovery { nodeResources };
         
-        // create a blocking signal handler
+        DRAIVE::Link2::ConfigurationNode rootNode = nodeResources.getUserConfiguration();
+        DRAIVE::Link2::OutputPin outputPin{nodeDiscovery, nodeResources, "video_output"};
+        DRAIVE::Link2::InputPin inputPin{nodeDiscovery, nodeResources, "video_input"};
+
         DRAIVE::Link2::SignalHandler signalHandler {};
         signalHandler.setReceiveSignalTimeout(-1);
-        
-        // if signal is not shutdown
-        while (signalHandler.receiveSignal() != LINK2_SIGNAL_INTERRUPT)
-            ;
-        
-        return 0;
-        
-    } catch (const std::exception& e) {
-        std::cerr << e.what() << std::endl;
-        return 1;
-    }
+
+		link_dev::Services::FaceDetector fDetector(signalHandler, nodeResources, 
+		                                           nodeDiscovery, outputPin, inputPin, 
+										           rootNode.getBoolean("SetVisualization"), 
+										           rootNode.getString("PathToModelFile"));
+										 
+		return fDetector.Run();
+	} 
+	catch (const std::exception& e) 
+	{
+		std::cout << e.what() << std::endl;
+		return 1;
+	}
+	return 0;
 }

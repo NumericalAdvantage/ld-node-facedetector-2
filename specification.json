@@ -4,28 +4,45 @@
     "pins" : 
     {
         "video_input" : 
-	{
-	    "pin-type" : "input",
-	    "data-type" :
+	    {
+            "pin-type" : "input",
+            "demands" : 
             {
-                "schema-filename" : "data/Image.bfbs",
-                "table-name" : "link_dev.Image"
+                "l2demand:/videoinput_thruimages" :
+                {
+                    "data-type" :
+                    {
+                        "schema-filename" : "data/Image.bfbs",
+                        "table-name" : "link_dev.Image"
+                    }
+                }
             }
         },
-	"video_output" :
-	{
-	   "pin-type" : "output",
-           "data-type" :
-           {
-               "schema-filename" : "data/Image.bfbs",
-               "table-name" : "link_dev.Image"
-           }
-	}
+	    
+        "video_output" :
+	    {
+	        "pin-type" : "output",
+            "offers" : 
+            {
+                "l2offer:/videooutput_thruimages" :
+                {
+                    "data-type" :
+                    {
+                        "schema-filename" : "data/Image.bfbs",
+                        "table-name" : "link_dev.Image"
+                    }
+                }
+            } 
+	    }
     },
     "user-configuration-schema": {
         "$schema": "http://json-schema.org/draft-04/schema#",
         "type": "object",
-        "properties": {},
+        "properties": 
+        {
+            "SetVisualization" : { "type" : "boolean" },
+            "PathToModelFile" : { "type" : "string" }
+        },
         "additionalProperties" : false
     }
 }

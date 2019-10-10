@@ -23,6 +23,9 @@
 	}
         
     },
-    "user-configuration" : {
+    "user-configuration" : 
+    {
+        "SetVisualization" : true,
+        "PathToModelFile" : "" 
     }
 }
