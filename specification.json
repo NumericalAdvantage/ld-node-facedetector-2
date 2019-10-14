@@ -24,12 +24,20 @@
 	        "pin-type" : "output",
             "offers" : 
             {
-                "l2offer:/videooutput_thruimages" :
+                "l2offer:/debug_video_output" :
                 {
                     "data-type" :
                     {
                         "schema-filename" : "data/Image.bfbs",
                         "table-name" : "link_dev.Image"
+                    }
+                },
+                "l2offer:/image_with_bounding_box" :
+                {
+                    "data-type" :
+                    {
+                        "schema-filename" : "data/data.bfbs",
+                        "table-name" : "ImageWithBoundingBox"
                     }
                 }
             } 
@@ -40,7 +48,7 @@
         "type": "object",
         "properties": 
         {
-            "SetVisualization" : { "type" : "boolean" },
+            "DebugMode" : { "type" : "boolean" },
             "PathToModelFile" : { "type" : "string" }
         },
         "additionalProperties" : false

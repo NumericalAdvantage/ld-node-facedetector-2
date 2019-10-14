@@ -26,7 +26,7 @@ int main(int argc, char **argv)
 
 		link_dev::Services::FaceDetector fDetector(signalHandler, nodeResources, 
 		                                           nodeDiscovery, outputPin, inputPin, 
-										           rootNode.getBoolean("SetVisualization"), 
+										           rootNode.getBoolean("DebugMode"),
 										           rootNode.getString("PathToModelFile"));
 										 
 		return fDetector.Run();

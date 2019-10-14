@@ -54,7 +54,7 @@ namespace link_dev
             DRAIVE::Link2::NodeDiscovery m_nodeDiscovery;
             DRAIVE::Link2::OutputPin m_outputPin;
 			DRAIVE::Link2::InputPin m_inputPin;	    
-		    bool m_toVisualize = false;
+		    bool m_debugActivated = false;
 			neuralNetType m_neuralNet;
 			std::string m_pathToModel;
 
@@ -64,20 +64,28 @@ namespace link_dev
                          DRAIVE::Link2::NodeDiscovery nodeDiscovery,
                          DRAIVE::Link2::OutputPin outputPin,
 						 DRAIVE::Link2::InputPin inputPin,
-						 bool toVisualize,
+						 bool isdebugMode,
 						 std::string pathToModelFile) :
 						 m_signalHandler(signalHandler),
                          m_nodeResources(nodeResources),
                          m_nodeDiscovery(nodeDiscovery),
                          m_outputPin(outputPin),
 						 m_inputPin(inputPin),
-						 m_toVisualize(toVisualize),
+						 m_debugActivated(isdebugMode),
 						 m_pathToModel(pathToModelFile)
 			{}
-			void DetectFaces(link_dev::SerializableMessage<link_dev::Data::Imaging::Image2D> &msg);
+			void DetectFaces(cv::Mat& currentFrame);
 			int Run();
 		};
 	}
 }
 
 #endif
+
+/*
+References:
+1. http://dlib.net/dnn_mmod_face_detection_ex.cpp.html
+2. http://dlib.net/face_detection_ex.cpp.html
+3. http://dlib.net/dnn_introduction_ex.cpp.html
+4. http://dlib.net/dnn_introduction2_ex.cpp.html
+*/

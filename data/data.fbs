@@ -8,12 +8,18 @@
 
 include "Image.fbs";
 
- //Contains an Image and a set of co-ordinates that define a bounding box inside the image.
-table ImageWithBoundingBox
+struct BoundingBox
 {
-    imageWithFace : link_dev.Image;
     left : int32;
     top : int32;
     right : int32;
     bottom : int32;
+}
+
+//Contains an Image and a one or more set(s) of co-ordinates that define a bounding box 
+//inside the image.
+table ImageWithBoundingBox
+{
+    imageWithFace : link_dev.Image;
+    boxes : [BoundingBox];
 }

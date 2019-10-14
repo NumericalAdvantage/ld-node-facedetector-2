@@ -7,6 +7,8 @@
 - Tell the reader what this node is, what it does and provide context.
 - Why is this node useful?
 
+#### Note that this node cannot be used with the facial recognizer if the setvisualization is set to true. update RFC
+
 ## The node in action
 
 - Show the reader what the node looks like in action.
