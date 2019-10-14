@@ -61,7 +61,7 @@ void link_dev::Services::FaceDetector::DetectFaces(cv::Mat& currentFrame)
 			dlib::assign_image(dlibImage, dlib::cv_image<dlib::bgr_pixel>(tempMat));
 		}
 		
-		detFaces = net(dlibImage);
+		detFaces = m_neuralNet(dlibImage);
 
 		for (auto&& face : detFaces) 
 		{
@@ -82,12 +82,19 @@ void link_dev::Services::FaceDetector::DetectFaces(cv::Mat& currentFrame)
 
 		*result.mutable_positions() = facePositionData;
 
-		if (_configuration.visualise == "on") {
-			msg = link_dev::Data::Imaging::Image2DInterfaces::ToSerializableMessage(rereadOpencvMat, imgFormat, _configuration.visualStreamID);
+		if (_configuration.visualise == "on") 
+		{
+			msg = 
+			link_dev::Data::Imaging::Image2DInterfaces::ToSerializableMessage(rereadOpencvMat, 
+			                                                         imgFormat, 
+																	 _configuration.visualStreamID);
 			publishSerializable(msg);
 		}
-		else {
-			auto msg = link_dev::SerializableMessage<link_dev::Data::Imaging::Image2D_Plus_Points>{result, _configuration.imageStreamIDOut};
+		else 
+		{
+			auto msg = 
+			link_dev::SerializableMessage<link_dev::Data::Imaging::Image2D_Plus_Points>{result, 
+			                                                     _configuration.imageStreamIDOut};
 			publishSerializable(msg);
 		}
 	}

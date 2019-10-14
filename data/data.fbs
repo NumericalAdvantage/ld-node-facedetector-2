@@ -1,0 +1,19 @@
+/*
+ * This file is part of project link.developers/ld-node-facedetector-2.
+ * It is copyrighted by the contributors recorded in the version control history of the file,
+ * available from its original location https://gitlab.com/link.developers/ld-node-facedetector-2.
+ *
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
+include "Image.fbs";
+
+ //Contains an Image and a set of co-ordinates that define a bounding box inside the image.
+table ImageWithBoundingBox
+{
+    imageWithFace : link_dev.Image;
+    left : int32;
+    top : int32;
+    right : int32;
+    bottom : int32;
+}

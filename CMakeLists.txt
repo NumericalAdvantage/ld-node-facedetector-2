@@ -14,6 +14,7 @@ find_package(Link2-Cpp REQUIRED)
 find_package(Flatc REQUIRED)
 find_package(ld-cmake-tools REQUIRED)
 find_package(ld-interface-i2d REQUIRED)
+find_package(ld-lib-image REQUIRED)
 find_package(OpenCV REQUIRED)
 find_package(dlib REQUIRED)
 
@@ -21,10 +22,10 @@ find_package(dlib REQUIRED)
 # If you use libraries that contain Flatbuffer files, uncomment the lines with LD_FLATBUFFER_ variables.
 flatc_generate_cpp(
     BFBS_OUTPUT_FOLDER ${CMAKE_SOURCE_DIR}/data
-    #INCLUDE_PATHS ${LD_FLATBUFFER_DATA_FOLDERS}
+    INCLUDE_PATHS ${LD_FLATBUFFER_DATA_FOLDERS}
     INPUT_FILES
-        #${LD_FLATBUFFER_FILES}
-        #data/myDataFile.fbs
+        ${LD_FLATBUFFER_FILES}
+        data/data.fbs
     )
 
 add_executable(${PROJECT_NAME}
