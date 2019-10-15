@@ -14,6 +14,8 @@
 #include "Facedetector.hpp"
 #include "data_generated.h"
 
+#define INITIAL_SIZE 1024
+
 int link_dev::Services::FaceDetector::Run() 
 {
 	dlib::deserialize(m_pathToModel) >> m_neuralNet;
@@ -29,14 +31,17 @@ int link_dev::Services::FaceDetector::Run()
 	return 0;
 }
 
-void link_dev::Services::FaceDetector::DetectFaces(cv::Mat& currentFrame) 
+void link_dev::Services::FaceDetector::DetectFaces(const cv::Mat& incomingFrame) 
 {
+	cv::Mat currentFrame(incomingFrame);
+
 	try
 	{
-		std::vector<dlib::mmod_rect> detFaces;
 		dlib::matrix<dlib::rgb_pixel> dlibImage;
 		bool grayScale = false;
 		
+		//Create a dlib image from the currentFrame because we want to pass the 
+		//currentFrame to a dlib neural network to get the (face) bounding box predictions.
 		if (currentFrame.channels() == 3) 
 		{
 			dlib::assign_image(dlibImage, dlib::cv_image<dlib::bgr_pixel>(currentFrame));
@@ -49,78 +54,79 @@ void link_dev::Services::FaceDetector::DetectFaces(cv::Mat& currentFrame)
 			dlib::assign_image(dlibImage, dlib::cv_image<dlib::bgr_pixel>(tempMat));
 		}
 	
-		// Now tell the face detector to give us a list of bounding boxes
-        // around all the faces it can find in the image.
-		detFaces = m_neuralNet(dlibImage);
+		//Now tell the face detector to give us a list of bounding boxes
+        //around all the faces it can find in the image.
+		std::vector<dlib::mmod_rect>  detFaces = m_neuralNet(dlibImage);
+		std::vector<flatbuffers::Offset<BoundingBox>> boundingBoxes; 
+		flatbuffers::FlatBufferBuilder fb_builder(INITIAL_SIZE);
 
+		//Iterate over the set of bounding boxes for faces found in the currentFrame by the 
+		//neural network.
 		for (auto&& face : detFaces)
 		{
 			if (m_debugActivated) 
 			{
-				//For each face that is found in currentFrame, add an overlay (in black) to the image 
-				//such that when the image is viewed the bounding boxes can be seen in the image.
+				//For each face that is found in currentFrame, add an overlay (in black) to the image. 
 				cv::Point upperLeft(face.rect.left(), face.rect.top());
 				cv::Point bottomRight(face.rect.right(), face.rect.bottom());
 				cv::rectangle(currentFrame, upperLeft, bottomRight, cv::Scalar(0, 255, 0));
-				//Publish the image with bounding boxes overlay for debugging.
-				if(grayScale)
-				{
-					m_outputPin.push(link_dev::Interfaces::ImageFromOpenCV(currentFrame, 
-					                                             link_dev::Format::Format_GRAY_U8));
-				}
-				else
-				{
-					m_outputPin.push(link_dev::Interfaces::ImageFromOpenCV(currentFrame, 
-					                                             link_dev::Format::Format_BGR_U8));	
-				}
 			}
 			else
 			{
 				//For each face that is found in currentFrame, create a BoundingBox flatbuffer
-				//object and push it onto the mesh.
-				if(grayScale)
-				{
-					ImageWithBoundingBoxT img{};
-					img.imageWithFace(link_dev::Interfaces::ImageFromOpenCV(currentFrame, 
-					                                            link_dev::Format::Format_GRAY_U8));
-					
-
-				}
-				else
-				{
-					
-				}
-				
-						
-
+				//object and add it to the vector. This way we have all the bounding boxes stored in
+				//the vector.
+				boundingBoxes.push_back(CreateBoundingBox(fb_builder, face.rect.left(), 
+				                                          face.rect.top(), face.rect.right(),
+														  face.rect.bottom()));
 			}
-			
-
-			
-			auto upperLeft = facePositionData.add_tuples();
-			upperLeft->set_item1((uint64_t)face.rect.left());
-			upperLeft->set_item2((uint64_t)face.rect.top());
-			auto bottomRight = facePositionData.add_tuples();
-			bottomRight->set_item1((uint64_t)face.rect.right());
-			bottomRight->set_item2((uint64_t)face.rect.bottom());
 		}
 
-		*result.mutable_positions() = facePositionData;
+		auto allBoundingBoxes = fb_builder.CreateVector(boundingBoxes);
 
-		if (m_toVisualize) 
+		if (m_debugActivated) 
 		{
-			msg = 
-			link_dev::Data::Imaging::Image2DInterfaces::ToSerializableMessage(currentFrame, 
-			                                                         imgFormat, 
-																	 _configuration.visualStreamID);
-			publishSerializable(msg);
+
+			//Publish the image with bounding boxes overlay for debugging onto the mesh
+			//Note how we do not publish any flatbuffer object in this mode.
+			if(grayScale)
+			{
+				m_outputPin.push(link_dev::Interfaces::ImageFromOpenCV(currentFrame, 
+			                                        link_dev::Format::Format_GRAY_U8),
+													"l2offer:/debug_video_output");	
+			}
+			else
+			{
+				m_outputPin.push(link_dev::Interfaces::ImageFromOpenCV(currentFrame, 
+				                                    link_dev::Format::Format_BGR_U8),
+													"l2offer:/debug_video_output");	
+			}
 		}
 		else 
 		{
-			auto msg = 
-			link_dev::SerializableMessage<link_dev::Data::Imaging::Image2D_Plus_Points>{result, 
-			                                                     _configuration.imageStreamIDOut};
-			publishSerializable(msg);
+			//Publish the flatbuffer containing the link_dev::Image and array of bounding boxe
+			//onto the mesh.
+			ImageWithBoundingBoxBuilder output_builder(fb_builder);
+			if(grayScale)
+			{
+				output_builder.add_boxes(allBoundingBoxes);
+				output_builder.add_imageWithFace(link_dev::Interfaces::ImageFromOpenCV(currentFrame, 
+			                                                     link_dev::Format::Format_GRAY_U8));
+				auto output = output_builder.Finish();
+				fb_builder.Finish(output);
+
+				m_outputPin.push(output, "l2offer:/image_with_bounding_boxes");
+			}
+			else
+			{
+				output_builder.add_boxes(allBoundingBoxes);
+				output_builder.add_imageWithFace(link_dev::Interfaces::ImageFromOpenCV(currentFrame, 
+			                                                     link_dev::Format::Format_BGR_U8));
+				auto output = output_builder.Finish();
+				fb_builder.Finish(output);
+
+				m_outputPin.push(output, "l2offer:/image_with_bounding_boxes");
+			}
 		}
 	}
 	catch (const std::exception& ex)

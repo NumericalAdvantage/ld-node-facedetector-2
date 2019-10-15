@@ -74,7 +74,7 @@ namespace link_dev
 						 m_debugActivated(isdebugMode),
 						 m_pathToModel(pathToModelFile)
 			{}
-			void DetectFaces(cv::Mat& currentFrame);
+			void DetectFaces(const cv::Mat& incomingFrame);
 			int Run();
 		};
 	}
@@ -88,4 +88,6 @@ References:
 2. http://dlib.net/face_detection_ex.cpp.html
 3. http://dlib.net/dnn_introduction_ex.cpp.html
 4. http://dlib.net/dnn_introduction2_ex.cpp.html
+5. https://google.github.io/flatbuffers/flatbuffers_guide_tutorial.html
+
 */

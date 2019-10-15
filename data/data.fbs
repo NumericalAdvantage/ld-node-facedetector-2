@@ -8,7 +8,7 @@
 
 include "Image.fbs";
 
-struct BoundingBox
+table BoundingBox
 {
     left : int32;
     top : int32;

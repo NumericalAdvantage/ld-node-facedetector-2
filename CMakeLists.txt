@@ -7,7 +7,7 @@
 cmake_minimum_required(VERSION 3.0)
 project(ld-node-facedetector-2)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Link2-Cpp REQUIRED)
@@ -30,6 +30,8 @@ flatc_generate_cpp(
 
 add_executable(${PROJECT_NAME}
     src/main.cpp
+    src/Facedetector.cpp
+    src/Facedetector.hpp
     ${FLATC_GENERATED_SOURCES}
     )
 
