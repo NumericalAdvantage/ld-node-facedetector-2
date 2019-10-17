@@ -6,7 +6,6 @@
     {
         "video_input" :
         {
-            "pin-type" : "input",
             "demands" : 
             {
                 "l2demand:/videoinput_thruimages" : ["l2offer:/webcam_feed"]
@@ -15,7 +14,6 @@
 
         "video_output":
         {
-            "pin-type" : "output",
             "offers" :
             {
                 "l2offer:/debug_video_output" : ["l2offer:/debug_video_output"],
