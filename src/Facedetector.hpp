@@ -20,14 +20,6 @@
 #include <DRAIVE/Link2/OutputPin.hpp>
 #include <DRAIVE/Link2/InputPin.hpp>
 
-/*
-#include <DRAIVE/Link/Node.hpp>
-#include <link_dev/Data/Imaging/Image2D_Plus_Points.pb.h>
-#include <link_dev/SerializingSocketBase.hpp>
-#include <link_dev/Data/Imaging/OpenCvToImage2D.h>
-#include <link_dev/SerializingSocketBase.hpp>
-*/
-
 template <long num_filters, typename SUBNET> using con5d = 
 dlib::con<num_filters, 5, 5, 2, 2, SUBNET>;
 
@@ -74,7 +66,7 @@ namespace link_dev
 						 m_debugActivated(isdebugMode),
 						 m_pathToModel(pathToModelFile)
 			{}
-			void DetectFaces(const cv::Mat& incomingFrame);
+			void DetectFaces(const cv::Mat& currentFrame);
 			int Run();
 		};
 	}

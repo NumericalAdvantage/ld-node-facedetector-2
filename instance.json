@@ -4,28 +4,28 @@
     "specification": "l2spec:/link_dev/ld-node-facedetector-2",
     "pins" :
     {
-    	"video_output":
-	{
-	    "offers" :
-	    {
-	        "default" : ["l2offer:/faceRecog_video_output"]
-	    }
-	},
-	"video_input" :
+        "video_input" :
         {
-            "subscriptions" : [
+            "pin-type" : "input",
+            "demands" : 
             {
-                "l2demand:/img-messages" : {
-                   "#" : "l2offer:/webcam_feed"
-                }
+                "l2demand:/videoinput_thruimages" : ["l2offer:/webcam_feed"]
             }
-            ]
-	}
-        
+        },
+
+        "video_output":
+        {
+            "pin-type" : "output",
+            "offers" :
+            {
+                "l2offer:/debug_video_output" : ["l2offer:/debug_video_output"],
+                "l2offer:/image_with_bounding_boxes" : ["l2offer:/image_with_bounding_boxes"]
+            }
+        }
     },
     "user-configuration" : 
     {
         "DebugMode" : true,
-        "PathToModelFile" : "" 
+        "PathToModelFile" : "model/mmod_human_face_detector.dat"
     }
 }
