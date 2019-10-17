@@ -6,9 +6,14 @@
     {
         "video_input" :
         {
-            "demands" : 
+            "subscriptions" : 
             {
-                "l2demand:/videoinput_thruimages" : ["l2offer:/webcam_feed"]
+                "l2demand:/videoinput_thruimages" : 
+                [
+                    {
+                        "#" : "l2offer:/webcam_feed"
+                    }
+                ]
             }
         },
 

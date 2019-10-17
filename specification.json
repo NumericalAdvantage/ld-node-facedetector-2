@@ -22,7 +22,7 @@
         "video_output" :
 	    {
 	        "pin-type" : "output",
-            "offers" : 
+            "supplies" :
             {
                 "debug_video_output" :
                 {
@@ -43,7 +43,9 @@
             } 
 	    }
     },
-    "user-configuration-schema": {
+
+    "user-configuration-schema": 
+    {
         "$schema": "http://json-schema.org/draft-04/schema#",
         "type": "object",
         "properties": 
