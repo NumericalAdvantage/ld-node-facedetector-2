@@ -24,7 +24,7 @@
 	        "pin-type" : "output",
             "offers" : 
             {
-                "l2offer:/debug_video_output" :
+                "debug_video_output" :
                 {
                     "data-type" :
                     {
@@ -32,7 +32,7 @@
                         "table-name" : "link_dev.Image"
                     }
                 },
-                "l2offer:/image_with_bounding_boxes" :
+                "image_with_bounding_boxes" :
                 {
                     "data-type" :
                     {
