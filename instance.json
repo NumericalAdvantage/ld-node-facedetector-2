@@ -21,8 +21,8 @@
         {
             "offers" :
             {
-                "debug_video_output" : ["l2offer:/debug_video_output"],
-                "image_with_bounding_boxes" : ["l2offer:/image_with_bounding_boxes"]
+                "l2offer:/debug_video_output" : ["l2offer:/debug_video_output"],
+                "l2offer:/image_with_bounding_boxes" : ["l2offer:/image_with_bounding_boxes"]
             }
         }
     },
