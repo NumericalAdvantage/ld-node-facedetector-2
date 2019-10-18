@@ -87,29 +87,29 @@ namespace link_dev
 		class FaceDetector 
 		{
 			DRAIVE::Link2::SignalHandler m_signalHandler;
-            DRAIVE::Link2::NodeResources m_nodeResources;
-            DRAIVE::Link2::NodeDiscovery m_nodeDiscovery;
-            DRAIVE::Link2::OutputPin m_outputPin;
+      DRAIVE::Link2::NodeResources m_nodeResources;
+      DRAIVE::Link2::NodeDiscovery m_nodeDiscovery;
+      DRAIVE::Link2::OutputPin m_outputPin;
 			DRAIVE::Link2::InputPin m_inputPin;
-		    bool m_debugActivated = false;
+		  bool m_debugActivated = false;
 			neuralNetType m_neuralNet;
 			std::string m_pathToModel;
 
 			public:
 			FaceDetector(DRAIVE::Link2::SignalHandler signalHandler,
-                         DRAIVE::Link2::NodeResources nodeResources,
-                         DRAIVE::Link2::NodeDiscovery nodeDiscovery,
-                         DRAIVE::Link2::OutputPin outputPin,
-						 DRAIVE::Link2::InputPin inputPin,
-						 bool isdebugMode,
-						 std::string pathToModelFile) :
-						 m_signalHandler(signalHandler),
-                         m_nodeResources(nodeResources),
-                         m_nodeDiscovery(nodeDiscovery),
-                         m_outputPin(outputPin),
-						 m_inputPin(inputPin),
-						 m_debugActivated(isdebugMode),
-						 m_pathToModel(pathToModelFile)
+                   DRAIVE::Link2::NodeResources nodeResources,
+                   DRAIVE::Link2::NodeDiscovery nodeDiscovery,
+                   DRAIVE::Link2::OutputPin outputPin,
+						       DRAIVE::Link2::InputPin inputPin,
+						       bool isdebugMode,
+						       std::string pathToModelFile) :
+						       m_signalHandler(signalHandler),
+                   m_nodeResources(nodeResources),
+                   m_nodeDiscovery(nodeDiscovery),
+                   m_outputPin(outputPin),
+						       m_inputPin(inputPin),
+						       m_debugActivated(isdebugMode),
+						       m_pathToModel(pathToModelFile)
 			{}
 			void DetectFaces(const cv::Mat& currentFrame);
 			int Run();
