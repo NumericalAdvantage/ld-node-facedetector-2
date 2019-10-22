@@ -27,7 +27,7 @@ requirements:
     - link2-cpp
     - opencv
     - dlib
-    - ld-interface-i2d
+    - ld-lib-image
     - cuda=9.0
     - cudnn
 
@@ -35,7 +35,7 @@ requirements:
     - link2
     - opencv
     - dlib
-    - ld-interface-i2d
+    - ld-lib-image
     - cuda=9.0
     - cudnn
 
