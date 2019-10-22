@@ -28,7 +28,7 @@
     },
     "user-configuration" : 
     {
-        "DebugMode" : true,
+        "DebugMode" : false,
         "PathToModelFile" : "model/mmod_human_face_detector.dat"
     }
 }
