@@ -28,6 +28,7 @@ requirements:
     - opencv
     - dlib
     - ld-lib-image
+    - ld-interface-i2d
     - cuda=9.0
     - cudnn
 
@@ -36,6 +37,7 @@ requirements:
     - opencv
     - dlib
     - ld-lib-image
+    - ld-interface-i2d
     - cuda=9.0
     - cudnn
 
