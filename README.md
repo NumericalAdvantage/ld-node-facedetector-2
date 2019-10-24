@@ -68,8 +68,6 @@ Your help is very much appreciated. For more information, please see our [contri
 7. http://dlib.net/dnn_introduction2_ex.cpp.html
 8. http://blog.dlib.net/2016/10/easily-create-high-quality-object.html
 
-*/
-
 ## Maintainers
 
 - Ritwik Ghosh (maintainer, original author)
