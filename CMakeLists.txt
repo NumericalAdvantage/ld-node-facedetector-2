@@ -37,7 +37,7 @@ add_executable(${PROJECT_NAME}
     )
 
 target_include_directories(${PROJECT_NAME} PRIVATE ${FLATC_GENERATED_INCLUDE_DIRS} ${OpenCV_INCLUDE_DIRS} dlib::dlib)
-target_link_libraries(${PROJECT_NAME} PUBLIC DRAIVE::Link2-Cpp ${CMAKE_THREAD_LIBS_INIT} ${OpenCV_LIBS} dlib::dlib link_dev::ld-data-protobuf link_dev::ld-interface-i2d)
+target_link_libraries(${PROJECT_NAME} PUBLIC DRAIVE::Link2-Cpp ${CMAKE_THREAD_LIBS_INIT} ${OpenCV_LIBS} dlib::dlib link_dev::ld-interface-i2d)
 
 cmake_make_installation(
         TARGETS ${PROJECT_NAME}
