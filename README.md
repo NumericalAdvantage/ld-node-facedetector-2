@@ -6,24 +6,27 @@
 
 - When supplied a video, this node detects human faces in each indivdual frame of the video.
 - This node runs in 2 modes depending upon the state of the "DebugMode" configuration parameter.
-- In normal mode this node supplies the following offer:
+- In normal mode this node supplies the following offer which contains the image in which faces are detected and the bounding box corresponding to each face and the number of faces detected.
 ```
-      table ImageWithBoundingBox
+      table ImageWithBoundingBoxes
       {
-          imageWithFace : link_dev.Image;
-          boxes : [BoundingBox];
+          imageWithFace : link_dev.Image;  //Image in which the bounding boxes have been defined.
+          boxes : [BoundingBox];           //An array of bounding boxes. 
+          numBoundingBoxes : int;          //Number of bounding boxes.
       }
 
       where BoundingBox is basically:
 
       table BoundingBox
       {
-          left : int32;
-          top : int32;
-          right : int32;
-          bottom : int32;
+          x_coordinate : int32; //x co-ordinate of top left corner of the bounding box.
+          y_coordinate : int32; //y co-ordinate of top left corner of the bounding box.
+          width : int32;        //width of the bounding box.
+          height : int32;       //height of the bounding box.
       }
 ```
+- From the RFC which this node implements: "A bounding box MUST be described by the (u,v) coordinate of the top left corner and its width and height in pixels.".
+- Note: A "bounding box" describes a subset of the image for which it is defined.
 - So, in normal mode you get the original image back, with a set of set of 4 points which form rectangles in the image meant to denote faces that were found in the image. 
 - In debug mode, you get a video feed in real time (assuming a sufficiently fast computer. From Reference[3], this is a computer with a NVIDIA Titan X GPU) with an overlay in black which shows you where the face(s) predictions were made on the frame.
 - Internally this node uses dlib to do all the machine learning stuff. It uses a pretrained model from dlib and makes heavy use of sample programs provided by dlib.

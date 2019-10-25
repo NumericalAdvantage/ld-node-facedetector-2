@@ -1,0 +1,26 @@
+/*
+ * This file is part of project link.developers/ld-node-facedetector-2.
+ * It is copyrighted by the contributors recorded in the version control history of the file,
+ * available from its original location https://gitlab.com/link.developers.beta/ld-node-facedetector-2.
+ *
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
+include "Image.fbs";
+
+//A "bounding box" describes a subset of the image for which it is defined.
+table BoundingBox
+{
+    x_coordinate : int32; //x co-ordinate of top left corner of the bounding box.
+    y_coordinate : int32; //y co-ordinate of top left corner of the bounding box.
+    width : int32;        //width of the bounding box.
+    height : int32;       //height of the bounding box.
+}
+
+//Contains an Image and a one or more set(s) of bounding box(es) inside the image.
+table ImageWithBoundingBoxes
+{
+    imageWithFace : link_dev.Image;  //Image in which the bounding boxes have been defined.
+    boxes : [BoundingBox];           //An array of bounding boxes. 
+    numBoundingBoxes : int;          //Number of bounding boxes.
+}

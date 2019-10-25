@@ -26,7 +26,7 @@ flatc_generate_cpp(
     INCLUDE_PATHS ${LD_FLATBUFFER_DATA_FOLDERS}
     INPUT_FILES
         ${LD_FLATBUFFER_FILES}
-        data/data.fbs
+        data/ImageWithBoundingBoxes.fbs
     )
 
 add_executable(${PROJECT_NAME}

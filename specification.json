@@ -36,8 +36,8 @@
                 {
                     "data-type" :
                     {
-                        "schema-filename" : "data/data.bfbs",
-                        "table-name" : "ImageWithBoundingBox"
+                        "schema-filename" : "data/ImageWithBoundingBoxes.bfbs",
+                        "table-name" : "ImageWithBoundingBoxes"
                     }
                 }
             } 

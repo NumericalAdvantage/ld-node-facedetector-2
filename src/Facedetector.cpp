@@ -12,7 +12,7 @@
 #include <dlib/opencv/cv_image.h>
 #include <link_dev/Interfaces/OpenCvToImage.h>
 #include "Facedetector.hpp"
-#include "data_generated.h"
+#include "ImageWithBoundingBoxes_generated.h"
 
 #define INITIAL_SIZE 1024
 
@@ -39,7 +39,7 @@ void link_dev::Services::FaceDetector::DetectFaces(const cv::Mat& incomingFrame)
 	{
 		dlib::matrix<dlib::rgb_pixel> dlibImage;
 		bool grayScale = false;
-		ImageWithBoundingBoxT imageAndBB; /*this is a flatbuffer struct which is used to hold the 
+		ImageWithBoundingBoxesT imageAndBB; /*this is a flatbuffer struct which is used to hold the 
 		                                    data which will be serialized by the output pin 
 											push() call*/
 		
@@ -78,10 +78,10 @@ void link_dev::Services::FaceDetector::DetectFaces(const cv::Mat& incomingFrame)
 				/*For each face that is found in currentFrame, create a BoundingBoxT object and 
 				  add a pointer to this object to the vector of bounding boxes in the flatbuffer.*/
 				BoundingBoxT currentBB;
-				currentBB.left = face.rect.left();
-				currentBB.top = face.rect.top();
-				currentBB.right = face.rect.right();
-				currentBB.bottom = face.rect.bottom();
+				currentBB.x_coordinate = face.rect.left();
+				currentBB.y_coordinate = face.rect.top();
+				currentBB.width = face.rect.right() - face.rect.left();
+				currentBB.height = face.rect.bottom() - face.rect.top();
 				
 				imageAndBB.boxes.push_back(std::make_unique<BoundingBoxT>(currentBB));
 			}
