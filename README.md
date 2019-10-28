@@ -28,8 +28,8 @@
 - From the RFC which this node implements: "A bounding box MUST be described by the (u,v) coordinate of the top left corner and its width and height in pixels.".
 - Note: A "bounding box" describes a subset of the image for which it is defined.
 - So, in normal mode you get the original image back, with a set of set of 4 points which form rectangles in the image meant to denote faces that were found in the image. 
-- In debug mode, you get a video feed in real time (assuming a sufficiently fast computer. From Reference[3], this is a computer with a NVIDIA Titan X GPU) with an overlay in black which shows you where the face(s) predictions were made on the frame.
-- Internally this node uses dlib to do all the machine learning stuff. It uses a pretrained model from dlib and makes heavy use of sample programs provided by dlib.
+- In debug mode, you get a video feed in real time (assuming a sufficiently fast computer. This is a computer with a NVIDIA Titan X GPU[3]) with an overlay in black which shows you where the face(s) predictions were made on the frame.
+- Internally this node uses dlib [1] to implement the algorithm presented in [5]. It uses a pretrained model [3] from dlib and makes heavy use of sample programs provided by dlib [3], [6], [7].
 
 ## Configuration
 
@@ -65,11 +65,10 @@ Your help is very much appreciated. For more information, please see our [contri
 1. http://dlib.net/ml.html
 2. http://dlib.net/dlib/dnn/layers_abstract.h.html
 3. http://dlib.net/dnn_mmod_face_detection_ex.cpp.html
-4. http://dlib.net/dlib/dnn/loss_abstract.h.html54. https://arxiv.org/pdf/1502.00046.pdf
-5. http://dlib.net/face_detection_ex.cpp.html
-6. http://dlib.net/dnn_introduction_ex.cpp.html
+4. http://dlib.net/dlib/dnn/loss_abstract.h.html
+5. https://arxiv.org/pdf/1502.00046.pdf
+6. http://dlib.net/face_detection_ex.cpp.html
 7. http://dlib.net/dnn_introduction2_ex.cpp.html
-8. http://blog.dlib.net/2016/10/easily-create-high-quality-object.html
 
 ## Maintainers
 
