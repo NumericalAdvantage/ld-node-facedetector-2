@@ -21,7 +21,7 @@ requirements:
     - {{ compiler("cxx") }}
     - cmake
     - ld-cmake-tools
-    - ld-data-protobuf
+    - protobuf
     - flatc
 
   host:
@@ -29,7 +29,6 @@ requirements:
     - opencv
     - dlib
     - ld-lib-image
-    - ld-interface-i2d
     - cuda=9.0
     - cudnn
 
@@ -38,8 +37,7 @@ requirements:
     - opencv
     - dlib
     - ld-lib-image
-    - ld-interface-i2d
-    - ld-data-protobuf
+    - protobuf
     - cuda=9.0
     - cudnn
 
