@@ -16,7 +16,7 @@ find_package(ld-cmake-tools REQUIRED)
 find_package(ld-lib-image REQUIRED)
 find_package(OpenCV REQUIRED)
 find_package(dlib REQUIRED)
-find_dependency(protobuf CONFIG REQUIRED)
+find_package(protobuf CONFIG REQUIRED)
 
 # When adding new data formats, add them to the INPUT_FILES section.
 # If you use libraries that contain Flatbuffer files, uncomment the lines with LD_FLATBUFFER_ variables.
